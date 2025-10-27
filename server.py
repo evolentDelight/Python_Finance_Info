@@ -65,7 +65,7 @@ def handler(ticker_symbol):
 
   now = dt.datetime.now(ZoneInfo('America/Los_Angeles'))
 
-  return f"""Current Date and Time: {now.strftime('%a %b %d %I:%S')} PDT
+  return f"""Current Date and Time: {now.strftime('%a %b %d %I:%M')} PDT
 Company Name: {company_name} ({symbol})
 Stock Price: {current_price} {value} ({percentage}%)
 """
