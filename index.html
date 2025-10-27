@@ -1,0 +1,32 @@
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Python Finance Info</title>
+  </head>
+  <body>
+    <h1>Python Finance Info</h1>
+    <h3>Uses Intraday Change Calculation</h3>
+    <h4>i.e. (Closing Price - Opening Price)</h4>
+
+    <input
+      type="text"
+      name="ticker"
+      id="ticker"
+      placeholder="Enter Ticker Symbol Here"
+    />
+    <input type="submit" id="submit" value="Submit" />
+    <br />
+    <p id="result" style="border: 1px solid"></p>
+    <script>
+      const resultElement = document.getElementById("result");
+      const submitButton = document.getElementById("submit");
+
+      submitButton.addEventListener("click", function () {
+        resultElement.innerHTML = `hello ${Math.random()}`;
+        // fetch('')
+        //   .then()
+      });
+    </script>
+  </body>
+</html>
