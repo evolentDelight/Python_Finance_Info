@@ -36,7 +36,7 @@ def calculate_percentage(close, open):
   else:
     return str(result)
 
-def get_prices(ticker_symbol):
+def get_info(ticker_symbol):
   ticker_data = yf.Ticker(ticker_symbol)
   df = ticker_data.history(period="1d")
 
@@ -45,24 +45,28 @@ def get_prices(ticker_symbol):
 
   info = ticker_data.info
   current_price = info.get('currentPrice')
+  company_name = info.get('longName','N/A')
+  symbol = info.get('symbol', 'N/A')
 
-  return open, close, current_price
+  return open, close, current_price, company_name, symbol
 
 def handler(ticker_symbol):
-  if check_network():
-    return """
-Error: Yahoo Finance API is down.
-
-Please try again later.
-"""
+  if not check_network():
+    return "Error: Yahoo Finance API is down.\nPlease try again later."
 
   if not is_ticker_valid(ticker_symbol):
     return f"Error: Ticker symbol: {ticker_symbol} is not valid"
   
-  ticker_prices = get_prices(ticker_symbol)
+  ticker_info = get_info(ticker_symbol)
 
-  values = calculate_value(ticker_prices.close, ticker_prices.open)
-  percentages = calculate_percentage(ticker_prices.close, ticker_prices.open)
+  value = calculate_value(ticker_info.close, ticker_info.open)
+  percentage = calculate_percentage(ticker_info.close, ticker_info.open)
+
+  return f"""
+Current Date and Time: {dt.datetime.now()}\n
+Ticker: {ticker_info.symbol}\n
+Stock Price: {ticker_info.current_price} {value} ({percentage})
+"""
 
 # /End
 
