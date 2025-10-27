@@ -39,7 +39,7 @@
           });
 
           const result = await response.json();
-
+          console.log(result, result.message);
           resultElement.textContent = result.message;
         } catch (error) {
           resultElement.textContent = error;
