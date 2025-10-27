@@ -2,7 +2,7 @@ from flask import Flask, request, jsonify, render_template
 from flask_cors import CORS
 import socket
 import yfinance as yf
-import ZoneInfo
+from zoneinfo import ZoneInfo
 import datetime as dt
 # Main Functionality methods
 
