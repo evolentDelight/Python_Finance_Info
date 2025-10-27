@@ -9,35 +9,43 @@
     <h3>Uses Intraday Change Calculation</h3>
     <h4>i.e. (Closing Price - Opening Price)</h4>
 
-    <input
-      type="text"
-      name="ticker"
-      id="ticker"
-      placeholder="Enter Ticker Symbol Here"
-    />
-    <input type="submit" id="submit" value="Submit" />
+    <form id="form">
+      <input
+        type="text"
+        name="ticker"
+        id="ticker"
+        placeholder="Enter Ticker Symbol Here"
+      />
+      <input type="submit" id="submit" value="Submit" />
+    </form>
+
     <br />
     <p id="result" style="border: 1px solid"></p>
     <script>
       const resultElement = document.getElementById("result");
-      const submitButton = document.getElementById("submit");
+      const form = document.getElementById("form");
 
-      submitButton.addEventListener("click", async function () {
-        resultElement.innerHTML = `hello ${Math.random()}`;
-        const response = await fetch(
-          "https://python-finance-info.onrender.com/api/submit",
-          {
-            method: "POST",
-            headers: {
-              "Content-Type": "application/json",
-            },
-            body: JSON.stringify(document.getElementById("ticker").value),
-          }
-        );
+      form.addEventListener("submit", async function () {
+        event.preventDefault();
 
-        const result = await response.json();
+        try {
+          const response = await fetch(
+            "https://python-finance-info.onrender.com/api/submit",
+            {
+              method: "POST",
+              headers: {
+                "Content-Type": "application/json",
+              },
+              body: JSON.stringify(document.getElementById("ticker").value),
+            }
+          );
 
-        resultElement.innerHTML = result;
+          const result = await response.json();
+
+          resultElement.innerHTML = result;
+        } catch (error) {
+          resultElement.innerHTML = error;
+        }
       });
     </script>
   </body>
