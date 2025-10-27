@@ -30,16 +30,13 @@
 
         resultElement.textContent = "Submitting...";
         try {
-          const response = await fetch(
-            "https://python-finance-info.onrender.com/api/submit",
-            {
-              method: "POST",
-              headers: {
-                "Content-Type": "application/json",
-              },
-              body: JSON.stringify(document.getElementById("ticker").value),
-            }
-          );
+          const response = await fetch("/api/submit", {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+            },
+            body: JSON.stringify(document.getElementById("ticker").value),
+          });
 
           const result = await response.json();
 
