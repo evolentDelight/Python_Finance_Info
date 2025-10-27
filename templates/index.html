@@ -39,8 +39,8 @@
           });
 
           const result = await response.json();
-          console.log(result, result.message);
-          resultElement.textContent = result.message;
+
+          resultElement.textContent = result.message.split("\n").join("<br/>");
         } catch (error) {
           resultElement.textContent = error;
         }
