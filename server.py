@@ -42,12 +42,17 @@ def get_prices(ticker_symbol):
 
   open = df['Open'].iloc[-1]
   close = df['Close'].iloc[-1]
-  return open, close
+
+  info = ticker_data.info
+  current_price = info.get('currentPrice')
+
+  return open, close, current_price
 
 def handler(ticker_symbol):
   if check_network():
     return """
 Error: Yahoo Finance API is down.
+
 Please try again later.
 """
 
