@@ -20,7 +20,10 @@
     </form>
 
     <br />
-    <p id="result" style="border: 1px solid; padding-left: 20px"></p>
+    <p
+      id="result"
+      style="border: 1px solid; padding-left: 20px; white-space: pre-wrap"
+    ></p>
     <script>
       const resultElement = document.getElementById("result");
       const form = document.getElementById("form");
@@ -40,7 +43,7 @@
 
           const result = await response.json();
 
-          resultElement.textContent = result.message.split("\n").join("<br/>");
+          resultElement.textContent = result.message;
         } catch (error) {
           resultElement.textContent = error;
         }
