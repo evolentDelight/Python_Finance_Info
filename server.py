@@ -55,18 +55,18 @@ def handler(ticker_symbol):
     return "Error: Yahoo Finance API is down.\nPlease try again later."
 
   if not is_ticker_valid(ticker_symbol):
-    return f"Error: Ticker symbol: {ticker_symbol} is not valid"
+    return f"Error: Ticker Symbol: [{ticker_symbol}] is not a valid Ticker Symbol."
   
   ticker_info = get_info(ticker_symbol)
 
   value = calculate_value(ticker_info.close, ticker_info.open)
   percentage = calculate_percentage(ticker_info.close, ticker_info.open)
 
-  return f"""
-Current Date and Time: {dt.datetime.now()}\n
-Ticker: {ticker_info.symbol}\n
-Stock Price: {ticker_info.current_price} {value} ({percentage})
-"""
+  return "wutyou'reproblem?"#f"""
+#Current Date and Time: {dt.datetime.now()}\n
+#Ticker: {ticker_info.symbol}\n
+#Stock Price: {ticker_info.current_price} {value} ({percentage})
+#"""
 
 # /End
 
