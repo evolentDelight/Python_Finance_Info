@@ -62,7 +62,11 @@ def handler(ticker_symbol):
   value = calculate_value(close, open)
   percentage = calculate_percentage(close, open)
 
-  return f"Current Date and Time: {dt.datetime.now()}\nCompany Name: {company_name} ({symbol})\nStock Price: {current_price} {value} ({percentage}%)"
+  return f"""
+Current Date and Time: {dt.datetime.now()}\n
+Company Name: {company_name} ({symbol})\n
+Stock Price: {current_price} {value} ({percentage}%)
+"""
 
 # /End
 
