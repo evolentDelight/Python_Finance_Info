@@ -2,6 +2,7 @@ from flask import Flask, request, jsonify, render_template
 from flask_cors import CORS
 import socket
 import yfinance as yf
+import locale
 import datetime as dt
 # Main Functionality methods
 
@@ -63,8 +64,9 @@ def handler(ticker_symbol):
   percentage = calculate_percentage(close, open)
 
   now = dt.datetime.now()
+  locale.setlocale(locale.LC_ALL, "en_US.UTF-8")
 
-  return f"""Current Date and Time: {now.strftime('%a %b %d %I:%S')}
+  return f"""Current Date and Time: {now.strftime('%a %b %d %I:%S UTF-8')}
 Company Name: {company_name} ({symbol})
 Stock Price: {current_price} {value} ({percentage}%)
 """
