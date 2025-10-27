@@ -52,21 +52,27 @@ def get_info(ticker_symbol):
 
 def handler(ticker_symbol):
   if not check_network():
-    return "Error: Yahoo Finance API is down.\nPlease try again later."
+    code = 503
+    response = "Error: Yahoo Finance API is down.\nPlease try again later."
+    return code, response
 
   if not is_ticker_valid(ticker_symbol):
-    return f"Error: Ticker Symbol: [{ticker_symbol}] is not a valid Ticker Symbol."
+    code = 400
+    response = f"Error: Ticker Symbol: [{ticker_symbol}] is not a valid Ticker Symbol."
+    return code, response
   
   ticker_info = get_info(ticker_symbol)
 
   value = calculate_value(ticker_info.close, ticker_info.open)
   percentage = calculate_percentage(ticker_info.close, ticker_info.open)
 
-  return "wutyou'reproblem?"#f"""
-#Current Date and Time: {dt.datetime.now()}\n
-#Ticker: {ticker_info.symbol}\n
-#Stock Price: {ticker_info.current_price} {value} ({percentage})
-#"""
+  code = 200
+  response = f"""
+Current Date and Time: {dt.datetime.now()}\n
+Ticker: {ticker_info.symbol}\n
+Stock Price: {ticker_info.current_price} {value} ({percentage})
+"""
+  return code, response
 
 # /End
 
@@ -81,7 +87,12 @@ def index():
 def submit_data():
   ticker_symbol = request.get_json()
 
-  response = handler(ticker_symbol)
+  data = handler(ticker_symbol)
+
+  response = {
+    'code' : f'{data.code}',
+    'message' : f'{data.response}'
+  }
 
   return jsonify(response)
 
