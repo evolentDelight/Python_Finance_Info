@@ -7,7 +7,7 @@ import datetime as dt
 
 def check_network(host: str = "www.finance.yahoo.com", port: int = 443, timeout: float = 3.0) -> bool:
   try:
-    with socket.create_connection((host, port), timeout:=timeout):
+    with socket.create_connection((host, port), timeout):
       return True
   except OSError:
     return False
@@ -52,27 +52,21 @@ def get_info(ticker_symbol):
 
 def handler(ticker_symbol):
   if not check_network():
-    code = 503
-    response = "Error: Yahoo Finance API is down.\nPlease try again later."
-    return code, response
+    return "Error: Yahoo Finance API is down.\nPlease try again later."
 
   if not is_ticker_valid(ticker_symbol):
-    code = 400
-    response = f"Error: Ticker Symbol: [{ticker_symbol}] is not a valid Ticker Symbol."
-    return code, response
+    return f"Error: Ticker Symbol: [{ticker_symbol}] is not a valid Ticker Symbol."
   
-  ticker_info = get_info(ticker_symbol)
+  open, close, current_price, company_name, symbol = get_info(ticker_symbol)
 
-  value = calculate_value(ticker_info.close, ticker_info.open)
-  percentage = calculate_percentage(ticker_info.close, ticker_info.open)
+  value = calculate_value(close, open)
+  percentage = calculate_percentage(close, open)
 
-  code = 200
-  response = f"""
+  return f"""
 Current Date and Time: {dt.datetime.now()}\n
-Ticker: {ticker_info.symbol}\n
-Stock Price: {ticker_info.current_price} {value} ({percentage})
+Company Name: {company_name} ({symbol})\n
+Stock Price: {current_price} {value} ({percentage})
 """
-  return code, response
 
 # /End
 
@@ -90,8 +84,7 @@ def submit_data():
   data = handler(ticker_symbol)
 
   response = {
-    'code' : f'{data.code}',
-    'message' : f'{data.response}'
+    'message' : f'{data}'
   }
 
   return jsonify(response)
